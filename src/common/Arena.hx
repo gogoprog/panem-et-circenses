@@ -8,4 +8,16 @@ class Arena
     public function new()
     {
     }
+
+    public function createRandomHeroes(total:Int)
+    {
+        for(i in 0...total)
+        {
+            var hero = new Hero();
+
+            hero.randomizeStats();
+
+            heroes.push(hero);
+        }
+    }
 }
