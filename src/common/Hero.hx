@@ -66,8 +66,8 @@ class Hero
     {
         xp += amount;
 
-        level = Std.int(Math.max( Math.floor( 8.7 * Math.log( xp + 111 ) - 40 ), 1));
-        compute;
+        level = Std.int(Math.max(Math.floor(8.7 * Math.log(xp + 111) - 40), 1));
+        compute();
     }
 
     public function compute()
