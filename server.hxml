@@ -1,0 +1,3 @@
+-cp src/
+-main server.Main
+-js out/server.js
