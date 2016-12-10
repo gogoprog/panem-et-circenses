@@ -11,6 +11,8 @@ class Hero
     public var agility:Float;
 
     public var mainAttack:Float;
+    public var attackTime:Float;
+    public var attackPerSecond:Float;
 
     public var armor:Float;
 
@@ -27,6 +29,7 @@ class Hero
     public var baseMinAttack:Float;
     public var baseMaxAttack:Float;
     public var baseLife:Float;
+    public var baseAttackTime:Float;
 
     public function new()
     {
@@ -49,6 +52,7 @@ class Hero
         baseMinAttack = 1 + Std.random(10);
         baseMaxAttack = baseMinAttack + Std.random(10);
         baseLife = Std.random(200);
+        baseAttackTime = 0.8 + Math.random();
 
         compute();
     }
@@ -72,6 +76,17 @@ class Hero
         agility = baseAgility + gainAgility * level;
         armor = baseArmor + agility * 0.5;
         maxLife = baseLife + strength * 20;
+
+        var ias = agility;
+
+        attackTime = baseAttackTime / ((100 + ias) * 0.01);
+        attackPerSecond = 1 / attackTime;
+
         mainAttack = baseMinAttack + Math.random() * (baseMaxAttack - baseMinAttack) + Math.max(strength, agility);
+    }
+
+    public function log()
+    {
+        trace(name + " Attack: " +  Utils.round(mainAttack) + "  APS: " + Utils.round(attackPerSecond));
     }
 }
