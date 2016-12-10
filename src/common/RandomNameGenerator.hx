@@ -7,7 +7,10 @@ class RandomNameGenerator
         "Dark",
         "Lord",
         "Sir",
-        "King"
+        "King",
+        "Baron",
+        "Duke",
+        "Prince"
     ];
 
     static private var nouns = [
@@ -19,10 +22,14 @@ class RandomNameGenerator
         "Blade",
         "Sword",
         "Axe",
-        "Fear"
+        "Fear",
+        "White",
+        "Black",
+        "Brown",
+        "Life"
     ];
 
-    static private var verbs = [
+    static private var nouns2 = [
         "bringer",
         "slaughter",
         "killer",
@@ -31,7 +38,13 @@ class RandomNameGenerator
         "freezer",
         "burner",
         "stopper",
-        "blower"
+        "blower",
+        "land",
+        "strong",
+        "bridge",
+        "mond",
+        "taker",
+        "ington"
     ];
 
     static public function createRandomName():String
@@ -40,7 +53,7 @@ class RandomNameGenerator
 
         do
         {
-            name = titles[Std.random(titles.length)] + " " + nouns[Std.random(nouns.length)] + verbs[Std.random(verbs.length)];
+            name = titles[Std.random(titles.length)] + " " + nouns[Std.random(nouns.length)] + nouns2[Std.random(nouns2.length)];
         }
         while(generatedNames.exists(name));
 
