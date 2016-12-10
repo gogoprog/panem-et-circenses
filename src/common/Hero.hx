@@ -2,6 +2,8 @@ package common;
 
 class Hero
 {
+    public var name:String;
+
     public var life:Float;
     public var maxLife:Float;
 
@@ -30,6 +32,11 @@ class Hero
     {
         xp = 0;
         level = 1;
+    }
+
+    public function randomizeName()
+    {
+        name = RandomNameGenerator.createRandomName();
     }
 
     public function randomizeStats()

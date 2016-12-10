@@ -16,8 +16,11 @@ class Arena
             var hero = new Hero();
 
             hero.randomizeStats();
+            hero.randomizeName();
 
             heroes.push(hero);
+
+            trace("New hero : " + hero.name);
         }
     }
 }
