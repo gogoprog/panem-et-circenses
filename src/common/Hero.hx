@@ -155,7 +155,7 @@ class Hero
                     {
                         currentTarget = heroes[Std.random(heroes.length)];
                     }
-                    while(currentTarget == this);
+                    while(currentTarget == this || currentTarget.isDead());
                 }
             }
 

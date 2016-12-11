@@ -9,7 +9,7 @@ class Main
 
         var arena = new Arena();
 
-        arena.createRandomHeroes(4);
+        arena.createRandomHeroes(40);
 
         js.Lib.debug();
         arena.start();
