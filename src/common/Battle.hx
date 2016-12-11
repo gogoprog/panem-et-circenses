@@ -3,6 +3,7 @@ package common;
 class Battle
 {
     public var heroes:Array<Hero>;
+    private var finished = false;
 
     public function new(heroes)
     {
@@ -17,6 +18,8 @@ class Battle
         {
             hero.reset();
         }
+
+        finished = false;
     }
 
     public function update(time:Float)
@@ -50,11 +53,27 @@ class Battle
                     hero.update(this, minTime);
                 }
             }
+
+            timeLeft -= minTime;
         }
+    }
+
+    public function isOver()
+    {
+        return finished;
     }
 
     public function end()
     {
         trace("Battle ended.");
+        finished = true;
+    }
+
+    public function logHeroes()
+    {
+        for(hero in heroes)
+        {
+            hero.log();
+        }
     }
 }

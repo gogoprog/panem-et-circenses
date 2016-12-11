@@ -1,5 +1,7 @@
 package common;
 
+import haxe.Timer;
+
 class Arena
 {
     public var heroes:Array<Hero> = new Array<Hero>();
@@ -31,6 +33,19 @@ class Arena
 
         battle.begin();
 
-        battle.update(100.0);
+        function iter()
+        {
+            battle.update(1.0);
+
+            Log.clear();
+            battle.logHeroes();
+
+            if(!battle.isOver())
+            {
+                Timer.delay(iter, 1000);
+            }
+        }
+
+        iter();
     }
 }

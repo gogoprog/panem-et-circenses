@@ -59,6 +59,8 @@ class Hero
         baseAttackTime = 0.8 + Math.random();
 
         compute();
+
+        life = maxLife;
     }
 
     public function reset()
@@ -93,11 +95,42 @@ class Hero
     public inline function computeMainAttack()
     {
         mainAttack = baseMinAttack + Math.random() * (baseMaxAttack - baseMinAttack) + Math.max(strength, agility);
+        timeUntilNextAttack = attackTime;
     }
 
     public function log()
     {
-        trace(name + " Attack: " +  Utils.round(mainAttack) + "  APS: " + Utils.round(attackPerSecond));
+        Log.color(LogColor.White);
+        Log.write(name);
+
+        for(i in 0...(25 - name.length))
+        {
+            Log.write(' ');
+        }
+
+        Log.color(LogColor.LightGray);
+        Log.write(' [');
+
+        Log.color(LogColor.Green);
+
+        var size = 40;
+        var l = Std.int((life / maxLife) * size);
+
+        for(i in 0...l)
+        {
+            Log.write('#');
+        }
+
+        for(i in 0...(size - l))
+        {
+            Log.write(' ');
+        }
+
+        Log.color(LogColor.LightGray);
+        Log.write('] ');
+        Log.write(Std.int(life) + "/" + Std.int(maxLife));
+        Log.write("| Att: " +  Utils.round(mainAttack) + "  APS: " + Utils.round(attackPerSecond));
+        Log.flush();
     }
 
     public inline function isDead()
@@ -141,6 +174,6 @@ class Hero
 
         other.life -= mainAttack;
 
-        trace(name + " hit " + other.name + " (" + mainAttack + ")");
+        other.life = Math.max(0, other.life);
     }
 }
