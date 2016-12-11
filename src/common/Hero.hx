@@ -31,6 +31,10 @@ class Hero
     public var baseLife:Float;
     public var baseAttackTime:Float;
 
+    public var timeUntilNextAttack:Float;
+
+    private var currentTarget:Hero;
+
     public function new()
     {
         xp = 0;
@@ -60,6 +64,7 @@ class Hero
     public function reset()
     {
         life = maxLife;
+        timeUntilNextAttack = attackTime;
     }
 
     public function gainXp(amount:Int)
@@ -82,11 +87,60 @@ class Hero
         attackTime = baseAttackTime / ((100 + ias) * 0.01);
         attackPerSecond = 1 / attackTime;
 
+        computeMainAttack();
+    }
+
+    public inline function computeMainAttack()
+    {
         mainAttack = baseMinAttack + Math.random() * (baseMaxAttack - baseMinAttack) + Math.max(strength, agility);
     }
 
     public function log()
     {
         trace(name + " Attack: " +  Utils.round(mainAttack) + "  APS: " + Utils.round(attackPerSecond));
+    }
+
+    public inline function isDead()
+    {
+        return life <= 0;
+    }
+
+    public function update(battle:Battle, dt:Float)
+    {
+        timeUntilNextAttack -= dt;
+
+        if(timeUntilNextAttack <= 0)
+        {
+            if(currentTarget == null || currentTarget.isDead())
+            {
+                var heroes = battle.heroes;
+                currentTarget = null;
+
+                if(heroes.length > 1)
+                {
+                    do
+                    {
+                        currentTarget = heroes[Std.random(heroes.length)];
+                    }
+                    while(currentTarget == this);
+                }
+            }
+
+            if(currentTarget != null)
+            {
+                attack(currentTarget);
+            }
+
+            timeUntilNextAttack = attackTime;
+        }
+    }
+
+    public function attack(other:Hero)
+    {
+        computeMainAttack();
+
+        other.life -= mainAttack;
+
+        trace(name + " hit " + other.name + " (" + mainAttack + ")");
     }
 }

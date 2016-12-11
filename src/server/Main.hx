@@ -10,5 +10,8 @@ class Main
         var arena = new Arena();
 
         arena.createRandomHeroes(4);
+
+        js.Lib.debug();
+        arena.start();
     }
 }

@@ -24,4 +24,13 @@ class Arena
             hero.log();
         }
     }
+
+    public function start()
+    {
+        var battle = new Battle(heroes);
+
+        battle.begin();
+
+        battle.update(100.0);
+    }
 }
