@@ -1,3 +1,4 @@
 -cp src/
 -main server.Main
 -js server/server.js
+-lib hxsocketio

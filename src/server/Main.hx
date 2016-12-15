@@ -1,5 +1,6 @@
 package server;
-import common.*;
+
+import js.node.socketio.*;
 
 class Main
 {
@@ -7,11 +8,10 @@ class Main
     {
         trace("Panem et Circenses");
 
-        var arena = new Arena();
+        var server = new Server();
 
-        arena.createRandomHeroes(40);
+        server.listen(8000);
 
-        js.Lib.debug();
-        arena.start();
+        new Application(server).run();
     }
 }
