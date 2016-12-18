@@ -2,3 +2,10 @@
 -main server.Main
 -js server/server.js
 -lib hxsocketio
+
+--next
+
+-cp src/
+-main client.terminal.Main
+-js client/client.js
+-lib hxsocketio

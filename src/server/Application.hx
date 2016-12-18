@@ -20,7 +20,7 @@ class Application
             'connection',
             function(socket:Socket)
             {
-                socket.emit("message", [for (k in arenasMap.keys()) k]);
+                socket.emit("welcome", [for (k in arenasMap.keys()) k]);
             }
         );
 
