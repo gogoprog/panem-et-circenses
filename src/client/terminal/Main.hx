@@ -1,5 +1,9 @@
 package client.terminal;
 
+import js.node.Readline;
+import js.node.readline.Interface;
+import js.Node.process;
+import js.Node.console;
 import js.node.socketio.*;
 
 class Main
@@ -15,6 +19,17 @@ class Main
             {
                 trace("Arenas:");
                 trace(data);
-            });
+            }
+        );
+
+        var rli = Readline.createInterface(process.stdin, process.stdout);
+
+        rli.question(
+            "Enter your nickname : ",
+            function(value:String)
+            {
+                client.emit("login", { nickname:value });
+            }
+        );
     }
 }

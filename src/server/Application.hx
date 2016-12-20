@@ -6,7 +6,7 @@ import common.*;
 class Application
 {
     private var server:Server;
-    private var arenasMap = new Map<String, Arena>();
+    private var roomArenaMap = new Map<String, Arena>();
 
     public function new(server:Server)
     {
@@ -20,7 +20,15 @@ class Application
             'connection',
             function(socket:Socket)
             {
-                socket.emit("welcome", [for (k in arenasMap.keys()) k]);
+                socket.emit("welcome", [for (k in roomArenaMap.keys()) k]);
+
+                socket.on(
+                    'login',
+                    function(data)
+                    {
+                        trace(data);
+                    }
+                );
             }
         );
 
@@ -29,7 +37,7 @@ class Application
 
     public function run()
     {
-        for(arena in arenasMap)
+        for(arena in roomArenaMap)
         {
             arena.start();
         }
@@ -42,7 +50,7 @@ class Application
             var name = "name" + i;
             var arena = new Arena();
             arena.createRandomHeroes(40);
-            arenasMap[name] = arena;
+            roomArenaMap[name] = arena;
         }
     }
 }

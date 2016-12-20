@@ -2,6 +2,7 @@
 -main server.Main
 -js server/server.js
 -lib hxsocketio
+-lib hxnodejs
 
 --next
 
@@ -9,3 +10,4 @@
 -main client.terminal.Main
 -js client/client.js
 -lib hxsocketio
+-lib hxnodejs

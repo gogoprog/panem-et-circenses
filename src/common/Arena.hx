@@ -22,8 +22,6 @@ class Arena
             hero.compute();
 
             heroes.push(hero);
-
-            hero.log();
         }
     }
 
@@ -37,8 +35,8 @@ class Arena
         {
             battle.update(1.0);
 
-            Log.clear();
-            battle.logHeroes();
+            //Log.clear();
+            //battle.logHeroes();
 
             if(!battle.isOver())
             {
