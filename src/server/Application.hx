@@ -20,13 +20,20 @@ class Application
             'connection',
             function(socket:Socket)
             {
-                socket.emit("welcome", [for (k in roomArenaMap.keys()) k]);
-
                 socket.on(
                     'login',
                     function(data)
                     {
-                        trace(data);
+                        socket.emit("arenas", [for (k in roomArenaMap.keys()) k]);
+                    }
+                );
+
+                socket.on(
+                    'joinArena',
+                    function(data)
+                    {
+                        trace("User joined " + data.name);
+                        socket.join(data.name);
                     }
                 );
             }

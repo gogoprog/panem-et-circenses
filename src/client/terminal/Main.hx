@@ -13,16 +13,34 @@ class Main
         trace("Panem et Circenses - terminal client");
 
         var client = new Client("http://localhost:8000/");
+        var rli = Readline.createInterface(process.stdin, process.stdout);
 
         client.on('welcome',
             function (data)
             {
-                trace("Arenas:");
-                trace(data);
+                trace("Connected to the server.");
             }
         );
 
-        var rli = Readline.createInterface(process.stdin, process.stdout);
+        client.on('arenas',
+            function (data:Array<String>)
+            {
+                trace("Arena lists:");
+
+                for(arena in data)
+                {
+                    trace("- " + arena);
+                }
+
+                rli.question(
+                    "Enter which arena : ",
+                    function(value:String)
+                    {
+                        client.emit("joinArena", { name:value });
+                    }
+                );
+            }
+        );
 
         rli.question(
             "Enter your nickname : ",
