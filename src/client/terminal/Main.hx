@@ -8,12 +8,15 @@ import js.node.socketio.*;
 
 class Main
 {
+    static private var rli:Interface;
+    static private var client:Client;
+
     static public function main()
     {
         trace("Panem et Circenses - terminal client");
 
-        var client = new Client("http://localhost:8000/");
-        var rli = Readline.createInterface(process.stdin, process.stdout);
+        client = new Client("http://localhost:8000/");
+        rli = Readline.createInterface(process.stdin, process.stdout);
 
         client.on('welcome',
             function (data)
@@ -42,11 +45,32 @@ class Main
             }
         );
 
+        client.on('welcome',
+            function (data)
+            {
+                trace("Welcome on " + data.name);
+
+                processCommand();
+            }
+        );
+
         rli.question(
             "Enter your nickname : ",
             function(value:String)
             {
                 client.emit("login", { nickname:value });
+            }
+        );
+    }
+
+
+    private static function processCommand()
+    {
+        rli.question(
+            "> ",
+            function(value:String)
+            {
+                processCommand();
             }
         );
     }

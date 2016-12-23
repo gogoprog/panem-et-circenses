@@ -34,6 +34,7 @@ class Application
                     {
                         trace("User joined " + data.name);
                         socket.join(data.name);
+                        socket.emit("welcome", {name:data.name});
                     }
                 );
             }
