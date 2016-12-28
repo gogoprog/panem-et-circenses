@@ -10,6 +10,7 @@ class Main
 {
     static private var rli:Interface;
     static private var client:Client;
+    static private var arenas:Array<String>;
 
     static public function main()
     {
@@ -28,20 +29,8 @@ class Main
         client.on('arenas',
             function (data:Array<String>)
             {
-                trace("Arena lists:");
-
-                for(arena in data)
-                {
-                    trace("- " + arena);
-                }
-
-                rli.question(
-                    "Enter which arena : ",
-                    function(value:String)
-                    {
-                        client.emit("joinArena", { name:value });
-                    }
-                );
+                arenas = data;
+                arenaSelection();
             }
         );
 
@@ -63,7 +52,6 @@ class Main
         );
     }
 
-
     private static function processCommand()
     {
         rli.question(
@@ -71,6 +59,33 @@ class Main
             function(value:String)
             {
                 processCommand();
+            }
+        );
+    }
+
+    private static function arenaSelection()
+    {
+        trace("Arena lists:");
+
+        for(i in 0...arenas.length)
+        {
+            trace("[" + i + "] " + arenas[i]);
+        }
+
+        rli.question(
+            "Enter which arena : ",
+            function(value:String)
+            {
+                var numberValue = Std.parseInt(value);
+
+                if(numberValue != null && numberValue >= 0 && numberValue < arenas.length)
+                {
+                    client.emit("joinArena", { name: arenas[numberValue] });
+                }
+                else
+                {
+                    arenaSelection();
+                }
             }
         );
     }
