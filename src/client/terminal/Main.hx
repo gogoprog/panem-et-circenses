@@ -5,6 +5,8 @@ import js.node.readline.Interface;
 import js.Node.process;
 import js.Node.console;
 import js.node.socketio.*;
+import common.Log;
+import common.LogColor;
 
 class Main
 {
@@ -83,7 +85,11 @@ class Main
 
         for(i in 0...choices.length)
         {
-            trace("[" + i + "] " + choices[i]);
+            Log.color(LogColor.Yellow);
+            Log.write("" + i);
+            Log.color(LogColor.LightGray);
+            Log.write(" : " + choices[i]);
+            Log.flush();
         }
 
         rli.question(

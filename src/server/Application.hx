@@ -42,7 +42,7 @@ class Application
             }
         );
 
-        createRandomArenas(1);
+        createRandomArenas(10);
     }
 
     public function run()
