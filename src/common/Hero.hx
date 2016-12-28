@@ -33,8 +33,6 @@ class Hero
 
     public var timeUntilNextAttack:Float;
 
-    private var currentTarget:Hero;
-
     public function new()
     {
         xp = 0;
@@ -138,7 +136,7 @@ class Hero
         return life <= 0;
     }
 
-    public function update(battle:Battle, dt:Float)
+    public function update(battle:Battle, dt:Float, currentTarget:Hero):Hero
     {
         timeUntilNextAttack -= dt;
 
@@ -166,6 +164,8 @@ class Hero
 
             timeUntilNextAttack = attackTime;
         }
+
+        return currentTarget;
     }
 
     public function attack(other:Hero)

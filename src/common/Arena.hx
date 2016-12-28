@@ -31,12 +31,13 @@ class Arena
     public function start()
     {
         var battle = new Battle(heroes);
+        var targetMap = new Map<Hero, Hero>();
 
         battle.begin();
 
         function iter()
         {
-            battle.update(1.0);
+            battle.update(1.0, targetMap);
 
             //Log.clear();
             //battle.logHeroes();

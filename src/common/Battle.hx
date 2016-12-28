@@ -22,7 +22,7 @@ class Battle
         finished = false;
     }
 
-    public function update(time:Float)
+    public function update(time:Float, targetMap:Map<Hero, Hero>)
     {
         var timeLeft = time;
 
@@ -50,7 +50,7 @@ class Battle
             {
                 if(!hero.isDead())
                 {
-                    hero.update(this, minTime);
+                    targetMap[hero] = hero.update(this, minTime, targetMap[hero]);
                 }
             }
 

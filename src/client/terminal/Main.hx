@@ -7,6 +7,7 @@ import js.Node.console;
 import js.node.socketio.*;
 import common.Log;
 import common.LogColor;
+import common.Battle;
 
 class Main
 {
@@ -69,7 +70,10 @@ class Main
             "battleUpdate",
             function(data)
             {
-                trace(data);
+                //var battle:Battle = data;
+
+                Log.clear();
+                //battle.logHeroes();
             }
             );
 
