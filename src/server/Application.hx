@@ -37,6 +37,8 @@ class Application
                         socket.emit("welcome", {name:data.name});
                     }
                 );
+
+                socket.emit("connected");
             }
         );
 

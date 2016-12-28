@@ -19,22 +19,42 @@ class Main
         client = new Client("http://localhost:8000/");
         rli = Readline.createInterface(process.stdin, process.stdout);
 
-        client.on('welcome',
+        client.on(
+            'connected',
             function (data)
             {
-                trace("Connected to the server.");
+                trace("Connected.");
+
+                rli.question(
+                    "Enter your nickname : ",
+                    function(value:String)
+                    {
+                        client.emit("login", { nickname:value });
+                    }
+                );
             }
         );
 
-        client.on('arenas',
+        client.on(
+            'arenas',
             function (data:Array<String>)
             {
                 arenas = data;
-                arenaSelection();
+
+                choiceMaker(
+                    arenas,
+                    "Arenas list :",
+                    "Enter arena number : ",
+                    function(result)
+                    {
+                        client.emit("joinArena", { name: result });
+                    }
+                    );
             }
         );
 
-        client.on('welcome',
+        client.on(
+            'welcome',
             function (data)
             {
                 trace("Welcome on " + data.name);
@@ -43,13 +63,7 @@ class Main
             }
         );
 
-        rli.question(
-            "Enter your nickname : ",
-            function(value:String)
-            {
-                client.emit("login", { nickname:value });
-            }
-        );
+        trace("Connecting...");
     }
 
     private static function processCommand()
@@ -63,28 +77,28 @@ class Main
         );
     }
 
-    private static function arenaSelection()
+    private static function choiceMaker(choices:Array<String>, title:String, prompt:String, resultCallback:String->Void)
     {
-        trace("Arena lists:");
+        trace(title);
 
-        for(i in 0...arenas.length)
+        for(i in 0...choices.length)
         {
-            trace("[" + i + "] " + arenas[i]);
+            trace("[" + i + "] " + choices[i]);
         }
 
         rli.question(
-            "Enter which arena : ",
+            prompt,
             function(value:String)
             {
                 var numberValue = Std.parseInt(value);
 
-                if(numberValue != null && numberValue >= 0 && numberValue < arenas.length)
+                if(numberValue != null && numberValue >= 0 && numberValue < choices.length)
                 {
-                    client.emit("joinArena", { name: arenas[numberValue] });
+                    resultCallback(choices[numberValue]);
                 }
                 else
                 {
-                    arenaSelection();
+                    choiceMaker(choices, title, prompt, resultCallback);
                 }
             }
         );
