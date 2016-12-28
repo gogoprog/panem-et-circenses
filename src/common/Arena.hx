@@ -6,6 +6,9 @@ class Arena
 {
     public var heroes:Array<Hero> = new Array<Hero>();
     public var battles:Array<Battle> = new Array<Battle>();
+    public var gamblers:Array<Gambler> = new Array<Gambler>();
+
+    public var eventCallback:String->Dynamic->Void = null;
 
     public function new()
     {
@@ -37,6 +40,11 @@ class Arena
 
             //Log.clear();
             //battle.logHeroes();
+
+            if(eventCallback != null)
+            {
+                eventCallback("battleUpdate", battle);
+            }
 
             if(!battle.isOver())
             {

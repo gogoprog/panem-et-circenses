@@ -31,7 +31,7 @@ class Main
                     "Enter your nickname : ",
                     function(value:String)
                     {
-                        client.emit("login", { nickname:value });
+                        client.emit("login", { name:value });
                     }
                 );
             }
@@ -64,6 +64,14 @@ class Main
                 processCommand();
             }
         );
+
+        client.on(
+            "battleUpdate",
+            function(data)
+            {
+                trace(data);
+            }
+            );
 
         trace("Connecting...");
     }

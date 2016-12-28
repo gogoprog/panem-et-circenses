@@ -1,12 +1,15 @@
 package server;
 
 import js.node.socketio.*;
-import common.*;
+import common.Arena;
+import common.Gambler;
 
 class Application
 {
     private var server:Server;
     private var roomArenaMap = new Map<String, Arena>();
+    //private var gamblerSocketMap = new Map<Gambler, Socket>();
+    //private var socketGamblerMap = new Map<Socket, Gambler>();
 
     public function new(server:Server)
     {
@@ -24,17 +27,27 @@ class Application
                     'login',
                     function(data)
                     {
-                        socket.emit("arenas", [for (k in roomArenaMap.keys()) k]);
-                    }
-                );
+                        var gambler = new Gambler(data.name);
 
-                socket.on(
-                    'joinArena',
-                    function(data)
-                    {
-                        trace("User joined " + data.name);
-                        socket.join(data.name);
-                        socket.emit("welcome", {name:data.name});
+                        //gamblerSocketMap[gambler] = socket;
+                        //socketGamblerMap[socket] = gambler;
+
+                        socket.emit("arenas", [for (k in roomArenaMap.keys()) k]);
+
+                        socket.on(
+                            'joinArena',
+                            function(data)
+                            {
+                                var arena = roomArenaMap[data.name];
+
+                                trace(gambler.name + " joined " + data.name);
+
+                                socket.join(data.name);
+                                socket.emit("welcome", {name:data.name});
+
+                                arena.gamblers.push(gambler);
+                            }
+                        );
                     }
                 );
 
@@ -61,6 +74,11 @@ class Application
             var arena = new Arena();
             arena.createRandomHeroes(40);
             roomArenaMap[name] = arena;
+
+            arena.eventCallback = function(eventName, data)
+            {
+                server.to(name).emit(eventName, data);
+            };
         }
     }
 }
