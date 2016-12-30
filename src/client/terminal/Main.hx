@@ -73,6 +73,7 @@ class Main
                 //var battle:Battle = data;
 
                 Log.clear();
+                trace(data.length);
                 //battle.logHeroes();
             }
             );

@@ -3,11 +3,13 @@ package server;
 import js.node.socketio.*;
 import common.Arena;
 import common.Gambler;
+import haxe.Serializer;
 
 class Application
 {
     private var server:Server;
     private var roomArenaMap = new Map<String, Arena>();
+
     //private var gamblerSocketMap = new Map<Gambler, Socket>();
     //private var socketGamblerMap = new Map<Socket, Gambler>();
 
@@ -77,7 +79,9 @@ class Application
 
             arena.eventCallback = function(eventName, data)
             {
-                server.to(name).emit(eventName, data);
+                var serializer = new Serializer();
+                serializer.serialize(data);
+                server.to(name).emit(eventName, serializer.toString());
             };
         }
     }
