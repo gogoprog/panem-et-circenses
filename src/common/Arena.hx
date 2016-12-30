@@ -30,6 +30,11 @@ class Arena
 
     public function start()
     {
+        startBattle();
+    }
+
+    public function startBattle()
+    {
         var battle = new Battle(heroes);
         var targetMap = new Map<Hero, Hero>();
 
@@ -50,6 +55,10 @@ class Arena
             if(!battle.isOver())
             {
                 Timer.delay(iter, 1000);
+            }
+            else
+            {
+                Timer.delay(startBattle, 10000);
             }
         }
 
