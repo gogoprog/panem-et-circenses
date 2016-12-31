@@ -7,6 +7,7 @@ class Arena
     public var heroes:Array<Hero> = new Array<Hero>();
     public var battles:Array<Battle> = new Array<Battle>();
     public var gamblers:Array<Gambler> = new Array<Gambler>();
+    public var timeFactor:Float = 1.0;
 
     public var eventCallback:String->Dynamic->Void = null;
 
@@ -51,7 +52,7 @@ class Arena
 
             if(!battle.isOver())
             {
-                Timer.delay(iter, 1000);
+                Timer.delay(iter, Std.int(1000 / timeFactor));
             }
             else
             {
@@ -61,7 +62,7 @@ class Arena
                     eventCallback("battleEnd", battle);
                 }
 
-                Timer.delay(startBattle, 10000);
+                Timer.delay(startBattle, Std.int(10000 / timeFactor));
             }
         }
 

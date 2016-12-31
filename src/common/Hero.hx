@@ -127,7 +127,9 @@ class Hero
         Log.color(LogColor.LightGray);
         Log.write('] ');
         Log.write(Std.int(life) + "/" + Std.int(maxLife));
-        Log.write("| Att: " +  Utils.round(mainAttack) + "  APS: " + Utils.round(attackPerSecond));
+        Log.write(' | Lvl:' + level + ' (' + xp + ')');
+
+        Log.write(" | Att:" +  Utils.round(mainAttack, 0) + " | APS:" + Utils.round(attackPerSecond));
         Log.flush();
     }
 
@@ -175,5 +177,10 @@ class Hero
         other.life -= mainAttack;
 
         other.life = Math.max(0, other.life);
+
+        if(other.isDead())
+        {
+            gainXp(Std.int((other.level / level) * other.level));
+        }
     }
 }

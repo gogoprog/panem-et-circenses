@@ -3,4 +3,4 @@
 /client/client.js
 node_modules
 *.log
-test/
+/test/
