@@ -1,0 +1,3 @@
+-cp src/
+-main test.Main
+-js test/main.js

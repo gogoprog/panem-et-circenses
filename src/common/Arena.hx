@@ -44,9 +44,6 @@ class Arena
         {
             battle.update(1.0, targetMap);
 
-            //Log.clear();
-            //battle.logHeroes();
-
             if(eventCallback != null)
             {
                 eventCallback("battleUpdate", battle);
