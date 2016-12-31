@@ -3,11 +3,13 @@ package common;
 class Battle
 {
     public var heroes:Array<Hero>;
+    public var survivors:Array<Hero>;
     private var finished = false;
 
     public function new(heroes)
     {
         this.heroes = heroes;
+        survivors = new Array<Hero>();
     }
 
     public function begin()
@@ -45,7 +47,7 @@ class Battle
                 end();
                 break;
             }
-
+            
             for(hero in heroes)
             {
                 if(!hero.isDead())
@@ -53,6 +55,7 @@ class Battle
                     targetMap[hero] = hero.update(this, minTime, targetMap[hero]);
                 }
             }
+
 
             timeLeft -= minTime;
         }
@@ -65,7 +68,14 @@ class Battle
 
     public function end()
     {
-        trace("Battle ended.");
+        for(hero in heroes)
+        {
+            if(!hero.isDead())
+            {
+                survivors.push(hero);
+            }
+        }
+
         finished = true;
     }
 

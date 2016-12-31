@@ -55,6 +55,12 @@ class Arena
             }
             else
             {
+
+                if(eventCallback != null)
+                {
+                    eventCallback("battleEnd", battle);
+                }
+
                 Timer.delay(startBattle, 10000);
             }
         }
