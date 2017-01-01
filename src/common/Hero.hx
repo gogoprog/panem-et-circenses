@@ -138,15 +138,16 @@ class Hero
         return life <= 0;
     }
 
-    public function update(battle:Battle, dt:Float, currentTarget:Hero):Hero
+    public function update(context:BattleContext, dt:Float)
     {
+        var currentTarget = context.targetMap[this];
         timeUntilNextAttack -= dt;
 
         if(timeUntilNextAttack <= 0)
         {
             if(currentTarget == null || currentTarget.isDead())
             {
-                var heroes = battle.heroes;
+                var heroes = context.heroes;
                 currentTarget = null;
 
                 if(heroes.length > 1)
@@ -167,7 +168,7 @@ class Hero
             timeUntilNextAttack = attackTime;
         }
 
-        return currentTarget;
+        context.targetMap[this] = currentTarget;
     }
 
     public function attack(other:Hero)

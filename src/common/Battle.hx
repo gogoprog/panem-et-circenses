@@ -5,11 +5,14 @@ class Battle
     public var heroes:Array<Hero>;
     public var survivors:Array<Hero>;
     private var finished = false;
+    private var context:BattleContext;
 
     public function new(heroes)
     {
         this.heroes = heroes;
         survivors = new Array<Hero>();
+        context = new BattleContext();
+        context.heroes = heroes;
     }
 
     public function begin()
@@ -47,12 +50,12 @@ class Battle
                 end();
                 break;
             }
-            
+
             for(hero in heroes)
             {
                 if(!hero.isDead())
                 {
-                    targetMap[hero] = hero.update(this, minTime, targetMap[hero]);
+                    hero.update(context, minTime);
                 }
             }
 

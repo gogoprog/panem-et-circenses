@@ -10,7 +10,7 @@ class Main
 
         var arena = new Arena();
         arena.timeFactor = 10;
-        arena.createRandomHeroes(10);
+        arena.createRandomHeroes(24);
 
         arena.eventCallback = function(eventName, data)
         {
