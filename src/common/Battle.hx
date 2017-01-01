@@ -1,11 +1,14 @@
 package common;
 
+import haxe.Timer;
+
 class Battle
 {
     public var heroes:Array<Hero>;
     public var survivors:Array<Hero>;
     private var finished = false;
-    private var context:BattleContext;
+    public var context:BattleContext;
+    public var onEndCallback:Void->Void = null;
 
     public function new(heroes)
     {
@@ -15,19 +18,46 @@ class Battle
         context.heroes = heroes;
     }
 
-    public function begin()
+    public function start(timeFactor:Float)
     {
-        trace("Battle started.");
-
         for(hero in heroes)
         {
             hero.reset();
         }
 
         finished = false;
+
+        function iter()
+        {
+            update(1.0);
+
+            if(context.eventCallback != null)
+            {
+                context.eventCallback("battleUpdate", this);
+            }
+
+            if(!isOver())
+            {
+                Timer.delay(iter, Std.int(1000 / timeFactor));
+            }
+            else
+            {
+                if(context.eventCallback != null)
+                {
+                    context.eventCallback("battleEnd", this);
+                }
+
+                if(onEndCallback != null)
+                {
+                    onEndCallback();
+                }
+            }
+        }
+
+        iter();
     }
 
-    public function update(time:Float, targetMap:Map<Hero, Hero>)
+    public function update(time:Float)
     {
         var timeLeft = time;
 

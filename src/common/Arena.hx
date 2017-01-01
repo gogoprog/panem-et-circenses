@@ -37,35 +37,10 @@ class Arena
     public function startBattle()
     {
         var battle = new Battle(heroes);
-        var targetMap = new Map<Hero, Hero>();
-
-        battle.begin();
-
-        function iter()
-        {
-            battle.update(1.0, targetMap);
-
-            if(eventCallback != null)
-            {
-                eventCallback("battleUpdate", battle);
-            }
-
-            if(!battle.isOver())
-            {
-                Timer.delay(iter, Std.int(1000 / timeFactor));
-            }
-            else
-            {
-
-                if(eventCallback != null)
-                {
-                    eventCallback("battleEnd", battle);
-                }
-
-                Timer.delay(startBattle, Std.int(10000 / timeFactor));
-            }
-        }
-
-        iter();
+        battle.context.eventCallback = eventCallback;
+        battle.start(timeFactor);
+        battle.onEndCallback = function() {
+            Timer.delay(startBattle, Std.int(10000 / timeFactor));
+            };
     }
 }
