@@ -29,7 +29,7 @@ class Battle
 
         function iter()
         {
-            update(1.0);
+            var timeLeft = update(1.0);
 
             if(context.eventCallback != null)
             {
@@ -38,7 +38,7 @@ class Battle
 
             if(!isOver())
             {
-                Timer.delay(iter, Std.int(1000 / timeFactor));
+                Timer.delay(iter, Std.int((1000 - timeLeft * 1000) / timeFactor));
             }
             else
             {
@@ -57,7 +57,7 @@ class Battle
         iter();
     }
 
-    public function update(time:Float)
+    public function update(time:Float):Float
     {
         var timeLeft = time;
 
@@ -92,6 +92,8 @@ class Battle
 
             timeLeft -= minTime;
         }
+
+        return timeLeft;
     }
 
     public function isOver()

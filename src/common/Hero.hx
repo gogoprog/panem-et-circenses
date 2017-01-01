@@ -181,7 +181,7 @@ class Hero
 
         if(other.isDead())
         {
-            gainXp(Std.int((other.level / level) * other.level));
+            gainXp(Std.int((other.level / level) * other.level * 2));
         }
     }
 }
