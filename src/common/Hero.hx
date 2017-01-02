@@ -33,6 +33,8 @@ class Hero
 
     public var timeUntilNextAttack:Float;
 
+    public var buried:Bool;
+
     public function new()
     {
         xp = 0;
@@ -65,6 +67,8 @@ class Hero
     {
         life = maxLife;
         timeUntilNextAttack = attackTime;
+
+        buried = false;
     }
 
     public function gainXp(amount:Int)

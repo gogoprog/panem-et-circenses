@@ -6,6 +6,7 @@ class Battle
 {
     public var heroes:Array<Hero>;
     public var survivors:Array<Hero>;
+    public var ranking:Array<Hero>;
     private var finished = false;
     public var context:BattleContext;
     public var onEndCallback:Void->Void = null;
@@ -13,7 +14,7 @@ class Battle
     public function new(heroes)
     {
         this.heroes = heroes;
-        survivors = new Array<Hero>();
+        ranking = new Array<Hero>();
         context = new BattleContext();
         context.heroes = heroes;
     }
@@ -73,6 +74,14 @@ class Battle
                     aliveCount++;
                     minTime = Math.min(hero.timeUntilNextAttack, minTime);
                 }
+                else
+                {
+                    if(!hero.buried)
+                    {
+                        ranking.push(hero);
+                        hero.buried = true;
+                    }
+                }
             }
 
             if(aliveCount <= 1)
@@ -107,11 +116,15 @@ class Battle
         {
             if(!hero.isDead())
             {
-                survivors.push(hero);
+                ranking.push(hero);
             }
         }
 
         finished = true;
+
+        ranking.reverse();
+
+
     }
 
     public function logHeroes()

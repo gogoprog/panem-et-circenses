@@ -10,7 +10,7 @@ class Main
 
         var arena = new Arena();
         arena.timeFactor = 10;
-        arena.createRandomHeroes(24);
+        arena.createRandomHeroes(5);
 
         arena.eventCallback = function(eventName, data)
         {
@@ -20,12 +20,12 @@ class Main
 
             if(battle.isOver())
             {
-            	Log.write("Winners: ");
-            	for(hero in battle.survivors)
-            	{
-            		Log.write(hero.name);
-            		Log.write(", ");
-            	}
+                Log.write("Ranking: ");
+                for(hero in battle.ranking)
+                {
+                    Log.write(hero.name);
+                    Log.write(", ");
+                }
 
             	Log.flush();
             }
