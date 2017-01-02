@@ -57,7 +57,7 @@ class Arena
                 break;
             }
 
-            battle.ranking[i].gainXp(points[i]);
+            battle.ranking[i].gainXp(Std.int(points[i] * (1.0 + battleCount / 10.0)));
         }
     }
 }
