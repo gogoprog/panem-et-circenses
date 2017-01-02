@@ -173,7 +173,12 @@ class Hero
 
     public function attack(other:Hero)
     {
+        var damage = 0.0;
+
         computeMainAttack();
+
+        damage = mainAttack /* + bonus */;
+        damage *= (1 - (0.06 * other.armor / (1 + 0.06 * other.armor)));
 
         other.life -= mainAttack;
 
