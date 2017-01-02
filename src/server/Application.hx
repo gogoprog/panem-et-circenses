@@ -74,7 +74,7 @@ class Application
         {
             var name = "name" + i;
             var arena = new Arena();
-            arena.createRandomHeroes(40);
+            arena.createRandomHeroes(8);
             roomArenaMap[name] = arena;
 
             arena.eventCallback = function(eventName, data)

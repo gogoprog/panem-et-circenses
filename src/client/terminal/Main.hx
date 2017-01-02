@@ -8,6 +8,7 @@ import js.node.socketio.*;
 import common.Log;
 import common.LogColor;
 import common.Battle;
+import haxe.Unserializer;
 
 class Main
 {
@@ -70,11 +71,12 @@ class Main
             "battleUpdate",
             function(data)
             {
-                //var battle:Battle = data;
+                var unserializer = new Unserializer(data);
+                var battle:Battle = unserializer.unserialize();
 
                 Log.clear();
                 trace(data.length);
-                //battle.logHeroes();
+                battle.logHeroes();
             }
             );
 
