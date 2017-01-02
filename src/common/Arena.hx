@@ -37,13 +37,14 @@ class Arena
     public function startBattle()
     {
         var battle = new Battle(heroes);
-        battle.context.eventCallback = eventCallback;
-        battle.start(timeFactor);
-        battle.onEndCallback = function() {
+        var context = new BattleContext();
+
+        context.eventCallback = eventCallback;
+        battle.start(timeFactor, context, function() {
             giveRewards(battle);
             Timer.delay(startBattle, Std.int(10000 / timeFactor));
             battleCount++;
-            };
+        });
     }
 
     public function giveRewards(battle:Battle)
