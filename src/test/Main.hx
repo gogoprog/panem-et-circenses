@@ -14,7 +14,7 @@ class Main
 
         arena.eventCallback = function(eventName, data)
         {
-        	var battle:Battle = data;
+            var battle:Battle = data;
             Log.clear();
             battle.logHeroes();
 
@@ -27,7 +27,7 @@ class Main
                     Log.write(", ");
                 }
 
-            	Log.flush();
+                Log.flush();
             }
         };
 
