@@ -45,7 +45,12 @@ class Application
                                 trace(gambler.name + " joined " + data.name);
 
                                 socket.join(data.name);
-                                socket.emit("welcome", {name:data.name});
+                                socket.emit(
+                                    "welcome",
+                                    {
+                                        name: data.name
+                                    }
+                                );
 
                                 arena.gamblers.push(gambler);
 

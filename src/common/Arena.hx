@@ -32,7 +32,13 @@ class Arena
 
     public function start()
     {
-        startBattle();
+        preBattle();
+    }
+
+    public function preBattle()
+    {
+        eventCallback("preBattle", heroes);
+        Timer.delay(startBattle, Std.int(10000 / timeFactor));
     }
 
     public function startBattle()
@@ -43,9 +49,9 @@ class Arena
         context.eventCallback = eventCallback;
         battle.start(timeFactor, context, function() {
             giveRewards(battle);
-            Timer.delay(startBattle, Std.int(10000 / timeFactor));
             battleCount++;
             fighting = false;
+            preBattle();
         });
 
         fighting = true;

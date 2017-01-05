@@ -8,6 +8,7 @@ import js.node.socketio.*;
 import common.Log;
 import common.LogColor;
 import common.Battle;
+import common.Hero;
 import haxe.Unserializer;
 
 class Main
@@ -15,6 +16,7 @@ class Main
     static private var rli:Interface;
     static private var client:Client;
     static private var arenas:Array<String>;
+    static private var heroes:Array<Hero>;
 
     static public function main()
     {
@@ -62,8 +64,6 @@ class Main
             function (data)
             {
                 trace("Welcome on " + data.name);
-
-                processCommand();
             }
         );
 
@@ -80,11 +80,28 @@ class Main
             }
             );
 
+        client.on(
+            "preBattle",
+            function(data)
+            {
+                var unserializer = new Unserializer(data);
+                heroes = unserializer.unserialize();
+
+                Log.clear();
+                processCommand();
+            }
+            );
+
         trace("Connecting...");
     }
 
     private static function processCommand()
     {
+        for(h in 0...heroes.length)
+        {
+            trace(h + ". " + heroes[h].name);
+        }
+
         rli.question(
             "> ",
             function(value:String)
