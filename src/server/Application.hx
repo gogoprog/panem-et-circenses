@@ -48,8 +48,18 @@ class Application
                                 socket.emit("welcome", {name:data.name});
 
                                 arena.gamblers.push(gambler);
+
+                                socket.on(
+                                    'bet',
+                                    function(data)
+                                    {
+                                        trace(data);
+                                    }
+                                );
                             }
                         );
+
+
                     }
                 );
 

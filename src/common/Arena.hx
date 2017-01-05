@@ -10,6 +10,7 @@ class Arena
     public var battleCount = 0;
 
     public var eventCallback:String->Dynamic->Void = null;
+    private var fighting = false;
 
     public function new()
     {
@@ -44,7 +45,10 @@ class Arena
             giveRewards(battle);
             Timer.delay(startBattle, Std.int(10000 / timeFactor));
             battleCount++;
+            fighting = false;
         });
+
+        fighting = true;
     }
 
     public function giveRewards(battle:Battle)
