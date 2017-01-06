@@ -3,6 +3,7 @@ package server;
 import js.node.socketio.*;
 import common.Arena;
 import common.Gambler;
+import common.Bet;
 import haxe.Serializer;
 
 class Application
@@ -52,13 +53,23 @@ class Application
                                     }
                                 );
 
+                                if(arena.isPreBattle())
+                                {
+                                    sendToClient(socket, "preBattle", arena.heroes);
+                                }
+
                                 arena.gamblers.push(gambler);
 
                                 socket.on(
                                     'bet',
                                     function(data)
                                     {
-                                        trace(data);
+                                        var bet = new Bet();
+                                        bet.hero = arena.heroes[data.heroIndex];
+                                        bet.gambler = gambler;
+                                        bet.amount = data.amount;
+
+                                        trace(gambler.name + " bet " + data.amount + " on " + bet.hero.name);
                                     }
                                 );
                             }
@@ -99,5 +110,12 @@ class Application
                 server.to(name).emit(eventName, serializer.toString());
             };
         }
+    }
+
+    private function sendToClient(socket, eventName, data)
+    {
+        var serializer = new Serializer();
+        serializer.serialize(data);
+        socket.emit(eventName, serializer.toString());
     }
 }

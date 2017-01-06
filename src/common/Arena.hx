@@ -11,9 +11,16 @@ class Arena
 
     public var eventCallback:String->Dynamic->Void = null;
     private var fighting = false;
+    private var _isPreBattle = false;
+    private var bets:Array<Bet>;
 
     public function new()
     {
+    }
+
+    public function isPreBattle()
+    {
+        return _isPreBattle;
     }
 
     public function createRandomHeroes(total:Int)
@@ -37,6 +44,8 @@ class Arena
 
     public function preBattle()
     {
+        bets = [];
+        _isPreBattle = true;
         eventCallback("preBattle", heroes);
         Timer.delay(startBattle, Std.int(10000 / timeFactor));
     }
@@ -45,6 +54,8 @@ class Arena
     {
         var battle = new Battle(heroes);
         var context = new BattleContext();
+
+        _isPreBattle = false;
 
         context.eventCallback = eventCallback;
         battle.start(timeFactor, context, function() {
@@ -70,5 +81,10 @@ class Arena
 
             battle.ranking[i].gainXp(Std.int(points[i] * (1.0 + battleCount / 10.0)));
         }
+    }
+
+    public function addBet(bet:Bet)
+    {
+        bets.push(bet);
     }
 }

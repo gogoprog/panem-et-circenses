@@ -51,7 +51,7 @@ class Main
                     arenas,
                     "Arenas list :",
                     "Enter arena number : ",
-                    function(result)
+                    function(index, result)
                     {
                         client.emit("joinArena", { name: result });
                     }
@@ -88,7 +88,18 @@ class Main
                 heroes = unserializer.unserialize();
 
                 Log.clear();
-                processCommand();
+
+                var heroesName = [for (hero in heroes) hero.name];
+
+                choiceMaker(
+                    heroesName,
+                    "Bet on hero?",
+                    "Select hero: ",
+                    function(index, result)
+                    {
+                        client.emit("bet", { heroIndex: index, amount: 100 });
+                    }
+                    );
             }
             );
 
@@ -111,7 +122,7 @@ class Main
         );
     }
 
-    private static function choiceMaker(choices:Array<String>, title:String, prompt:String, resultCallback:String->Void)
+    private static function choiceMaker(choices:Array<String>, title:String, prompt:String, resultCallback:Int->String->Void)
     {
         trace(title);
 
@@ -132,7 +143,7 @@ class Main
 
                 if(numberValue != null && numberValue >= 0 && numberValue < choices.length)
                 {
-                    resultCallback(choices[numberValue]);
+                    resultCallback(numberValue, choices[numberValue]);
                 }
                 else
                 {
